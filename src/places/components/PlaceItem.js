@@ -1,8 +1,9 @@
-import React from "react";
-import "./PlaceItem.css";
-import Card from "../../shared/components/UIElements/Card";
+import React from 'react';
 
-function PlaceItem(props) {
+import Card from '../../shared/components/UIElements/Card';
+import './PlaceItem.css';
+
+const PlaceItem = props => {
   return (
     <li className="place-item">
       <Card className="place-item__content">
@@ -22,6 +23,6 @@ function PlaceItem(props) {
       </Card>
     </li>
   );
-}
+};
 
 export default PlaceItem;
