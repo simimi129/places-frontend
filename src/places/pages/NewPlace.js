@@ -5,7 +5,13 @@ import Input from "../../shared/components/FormElements/Input";
 const NewPlace = () => {
   return (
     <form className="place-form">
-      <Input element="input" tpye="text" label="Title" />
+      <Input
+        element="input"
+        tpye="text"
+        label="Title"
+        validators={[]}
+        errorText="Please enter a valid title."
+      />
     </form>
   );
 };
