@@ -1,11 +1,12 @@
 import React, { useCallback, useReducer } from "react";
-import "./NewPlace.css";
+
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from "../../shared/utils/validators";
+import "./NewPlace.css";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -20,7 +21,7 @@ const formReducer = (state, action) => {
       }
       return {
         ...state,
-        input: {
+        inputs: {
           ...state.inputs,
           [action.inputId]: { value: action.value, isValid: action.isValid },
         },
@@ -38,9 +39,7 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
-    },
-    description: {
-      title: {
+      description: {
         value: "",
         isValid: false,
       },
@@ -57,12 +56,17 @@ const NewPlace = () => {
     });
   }, []);
 
+  const placeSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs); // send this to the backend!
+  };
+
   return (
-    <form className="place-form">
+    <form className="place-form" onSubmit={placeSubmitHandler}>
       <Input
         id="title"
         element="input"
-        tpye="text"
+        type="text"
         label="Title"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
@@ -71,10 +75,17 @@ const NewPlace = () => {
       <Input
         id="description"
         element="textarea"
-        tpye="text"
         label="Description"
-        validators={[VALIDATOR_MINLENGTH()]}
-        errorText="Please enter a valid description."
+        validators={[VALIDATOR_MINLENGTH(5)]}
+        errorText="Please enter a valid description (at least 5 characters)."
+        onInput={inputHandler}
+      />
+      <Input
+        id="address"
+        element="input"
+        label="Address"
+        validators={[VALIDATOR_REQUIRE()]}
+        errorText="Please enter a valid address."
         onInput={inputHandler}
       />
       <Button type="submit" disabled={!formState.isValid}>
